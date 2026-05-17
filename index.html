@@ -30,21 +30,14 @@
     .container { text-align: center; }
   </style>
   <script>
-    // احنا هنا بنستقبل رقم الروم من الرابط
-    // مثال: لو الرابط https://your-username.github.io/join/123456
-    // يبقى roomId هتكون 123456
     const pathParts = window.location.pathname.split('/');
     const roomId = pathParts[pathParts.length - 1];
 
-    // بنكون رابط التطبيق العميق
     const DEEP_LINK = `estimationgame://join/${roomId}`;
-    // الرابط الاحتياطي لو التطبيق مش مثبت
     const FALLBACK_URL = "https://play.google.com/store/apps/details?id=com.estimationgame.app";
 
-    // بنحاول نفتح التطبيق
     window.location.href = DEEP_LINK;
 
-    // لو خلال نص ثانية (500ms) التطبيق ما فتحش، نفتح صفحة المتجر
     setTimeout(() => {
       window.location.href = FALLBACK_URL;
     }, 500);
