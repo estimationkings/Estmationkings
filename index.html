@@ -30,9 +30,17 @@
     .container { text-align: center; }
   </style>
   <script>
+  // استخراج الـ roomId سواء من المسار أو من الـ URL Parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  let roomId = urlParams.get('match');
+  
+  if (!roomId) {
     const pathParts = window.location.pathname.split('/');
-    const roomId = pathParts[pathParts.length - 1];
+    roomId = pathParts[pathParts.length - 1];
+  }
 
+  // التأكد من وجود roomId قبل التحويل
+  if (roomId && roomId !== "") {
     const DEEP_LINK = `estimationgame://join/${roomId}`;
     const FALLBACK_URL = "https://play.google.com/store/apps/details?id=com.estimationgame.app";
 
@@ -40,8 +48,12 @@
 
     setTimeout(() => {
       window.location.href = FALLBACK_URL;
-    }, 500);
-  </script>
+    }, 1000); // زدنا الوقت لـ 1000ms لضمان عمل التحويل
+  } else {
+    // لو مفيش roomId، يروح للمتجر مباشرة
+    window.location.href = "https://play.google.com/store/apps/details?id=com.estimationgame.app";
+  }
+</script>
 </head>
 <body>
   <div class="container">
